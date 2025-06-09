@@ -79,7 +79,7 @@ async function searchByCEP(cep) {
     showLoading();
 
     try {
-        const response = await fetch(`http://localhost:5000/api/address/cep/${cep}`);
+        const response = await fetch(`https://viacep.com.br/ws/01001000/json/${cep}`);
 
         if (!response.ok) {
             throw new Error('CEP não encontrado');
@@ -96,7 +96,7 @@ async function searchByStateCity(state, city) {
     showLoading();
 
     try {
-        const response = await fetch(`http://localhost:5000/api/address/state-city?state=${state}&city=${city}`);
+        const response = await fetch(`https://viacep.com.br/ws/01001000/json/state-city?state=${state}&city=${city}`);
 
         if (!response.ok) {
             throw new Error('Nenhum endereço encontrado para esta combinação de estado e cidade');
