@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-   
     populateStates();
 
-    
+
     const cepForm = document.getElementById('cepForm');
     cepForm.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -15,15 +14,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
     const stateCityForm = document.getElementById('stateCityForm');
     stateCityForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const state = document.getElementById('state').value;
         const city = document.getElementById('city').value.trim();
+        const street = document.getElementById('street').value.trim();
 
-        if (state && city) {
-            searchByStateCity(state, city);
+        if (state && city && street) {
+            searchByStateCity(state, city, street);
         } else {
             showError('Preencha todos os campos para realizar a busca.');
         }
@@ -32,33 +31,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function populateStates() {
     const states = [
-        { uf: 'AC', name: 'Acre' },
-        { uf: 'AL', name: 'Alagoas' },
-        { uf: 'AP', name: 'Amapá' },
-        { uf: 'AM', name: 'Amazonas' },
-        { uf: 'BA', name: 'Bahia' },
-        { uf: 'CE', name: 'Ceará' },
-        { uf: 'DF', name: 'Distrito Federal' },
-        { uf: 'ES', name: 'Espírito Santo' },
-        { uf: 'GO', name: 'Goiás' },
-        { uf: 'MA', name: 'Maranhão' },
-        { uf: 'MT', name: 'Mato Grosso' },
-        { uf: 'MS', name: 'Mato Grosso do Sul' },
-        { uf: 'MG', name: 'Minas Gerais' },
-        { uf: 'PA', name: 'Pará' },
-        { uf: 'PB', name: 'Paraíba' },
-        { uf: 'PR', name: 'Paraná' },
-        { uf: 'PE', name: 'Pernambuco' },
-        { uf: 'PI', name: 'Piauí' },
-        { uf: 'RJ', name: 'Rio de Janeiro' },
-        { uf: 'RN', name: 'Rio Grande do Norte' },
-        { uf: 'RS', name: 'Rio Grande do Sul' },
-        { uf: 'RO', name: 'Rondônia' },
-        { uf: 'RR', name: 'Roraima' },
-        { uf: 'SC', name: 'Santa Catarina' },
-        { uf: 'SP', name: 'São Paulo' },
-        { uf: 'SE', name: 'Sergipe' },
-        { uf: 'TO', name: 'Tocantins' }
+        { uf: 'AC', name: 'Acre' }, { uf: 'AL', name: 'Alagoas' }, { uf: 'AP', name: 'Amapá' },
+        { uf: 'AM', name: 'Amazonas' }, { uf: 'BA', name: 'Bahia' }, { uf: 'CE', name: 'Ceará' },
+        { uf: 'DF', name: 'Distrito Federal' }, { uf: 'ES', name: 'Espírito Santo' }, { uf: 'GO', name: 'Goiás' },
+        { uf: 'MA', name: 'Maranhão' }, { uf: 'MT', name: 'Mato Grosso' }, { uf: 'MS', name: 'Mato Grosso do Sul' },
+        { uf: 'MG', name: 'Minas Gerais' }, { uf: 'PA', name: 'Pará' }, { uf: 'PB', name: 'Paraíba' },
+        { uf: 'PR', name: 'Paraná' }, { uf: 'PE', name: 'Pernambuco' }, { uf: 'PI', name: 'Piauí' },
+        { uf: 'RJ', name: 'Rio de Janeiro' }, { uf: 'RN', name: 'Rio Grande do Norte' }, { uf: 'RS', name: 'Rio Grande do Sul' },
+        { uf: 'RO', name: 'Rondônia' }, { uf: 'RR', name: 'Roraima' }, { uf: 'SC', name: 'Santa Catarina' },
+        { uf: 'SP', name: 'São Paulo' }, { uf: 'SE', name: 'Sergipe' }, { uf: 'TO', name: 'Tocantins' }
     ];
 
     const stateSelect = document.getElementById('state');
@@ -82,7 +63,7 @@ async function searchByCEP(cep) {
         const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
 
         if (!response.ok) {
-            throw new Error('CEP não encontrado');
+            throw new Error('CEP não encontrado.');
         }
 
         const address = await response.json();
@@ -92,14 +73,15 @@ async function searchByCEP(cep) {
     }
 }
 
-async function searchByStateCity(state, city) {
+async function searchByStateCity(state, city, street) {
     showLoading();
 
     try {
-        const response = await fetch(`https://viacep.com.br/ws/01001000/json/state-city?state=${state}&city=${city}`);
+        const url = `https://viacep.com.br/ws/${state}/${encodeURIComponent(city)}/${encodeURIComponent(street)}/json/`;
+        const response = await fetch(url);
 
         if (!response.ok) {
-            throw new Error('Nenhum endereço encontrado para esta combinação de estado e cidade');
+            throw new Error('Nenhum endereço encontrado para essa combinação.');
         }
 
         const addresses = await response.json();
@@ -113,7 +95,7 @@ function displayResults(addresses) {
     const resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
 
-    if (addresses.length === 0) {
+    if (!addresses || addresses.length === 0) {
         resultsContainer.innerHTML = '<p>Nenhum endereço encontrado.</p>';
         return;
     }
