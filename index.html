@@ -22,27 +22,27 @@
                 </form>
             </div>
             
-            <div class="form-container">
-                <h2>Busca por Estado/Cidade</h2>
-                <form id="stateCityForm">
-                    <div class="form-group">
-                        <label for="state">Estado:</label>
-                        <select id="state" required>
-                            <option value="">Selecione...</option>
-                            <!-- Estados serão preenchidos via JavaScript -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="city">Cidade:</label>
-                        <input type="text" id="city" placeholder="Digite a cidade" required>
-                    </div>
-                   <div class="form-group">
-                        <label for="city">Bairro:</label>
-                        <input type="text" id="city" placeholder="Digite o bairro" required>
-                    </div>
-                    <button type="submit">Buscar</button>
-                </form>
-            </div>
+           <div class="form-container">
+    <h2>Busca por Estado/Cidade/Logradouro</h2>
+    <form id="stateCityForm">
+        <div class="form-group">
+            <label for="state">Estado:</label>
+            <select id="state" required>
+                <option value="">Selecione...</option>
+                <!-- Estados preenchidos via JS -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="city">Cidade:</label>
+            <input type="text" id="city" placeholder="Digite a cidade" required>
+        </div>
+        <div class="form-group">
+            <label for="street">Logradouro:</label>
+            <input type="text" id="street" placeholder="Digite o logradouro (ex: Avenida Paulista)" required>
+        </div>
+        <button type="submit">Buscar</button>
+    </form>
+</div>
         </div>
         
         <div class="results">
