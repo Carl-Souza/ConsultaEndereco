@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Endereços</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Consulta de Endereços</h1>
+        
+        <div class="search-forms">
+            <div class="form-container">
+                <h2>Busca por CEP</h2>
+                <form id="cepForm">
+                    <div class="form-group">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" placeholder="Digite o CEP (ex: 01001000)" required>
+                    </div>
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
+            
+            <div class="form-container">
+                <h2>Busca por Estado/Cidade</h2>
+                <form id="stateCityForm">
+                    <div class="form-group">
+                        <label for="state">Estado:</label>
+                        <select id="state" required>
+                            <option value="">Selecione...</option>
+                            <!-- Estados serão preenchidos via JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Cidade:</label>
+                        <input type="text" id="city" placeholder="Digite a cidade" required>
+                    </div>
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="results">
+            <h2>Resultados</h2>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
