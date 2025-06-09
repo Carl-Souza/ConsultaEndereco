@@ -79,7 +79,7 @@ async function searchByCEP(cep) {
     showLoading();
 
     try {
-        const response = await fetch(`https://brasilapi.com.br/api/cep/v1/${cep}`);
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
 
         if (!response.ok) {
             throw new Error('CEP não encontrado');
